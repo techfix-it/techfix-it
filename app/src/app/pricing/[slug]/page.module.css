@@ -1,0 +1,176 @@
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4rem;
+  padding: 6rem 0;
+}
+
+@media (min-width: 992px) {
+  .layout {
+    grid-template-columns: 1fr 350px;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.headerSection {
+    background-color: var(--color-bg-light);
+    padding: 3rem;
+    border-radius: 20px;
+    text-align: center;
+    border: 1px solid var(--color-border);
+}
+
+.priceTag {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.amount {
+    font-size: 4rem;
+    font-weight: 800;
+    color: var(--color-primary);
+}
+
+.period {
+    font-size: 1.25rem;
+    color: var(--color-text-body);
+    margin-left: 0.5rem;
+}
+
+.mainDescription {
+    font-size: 1.25rem;
+    color: var(--color-text-body);
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.sectionTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+}
+
+.featuresGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .featuresGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.featureItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.125rem;
+  color: var(--color-text-heading);
+  padding: 1rem;
+  background-color: white;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+}
+
+.checkIcon {
+  color: var(--color-accent-2); /* Green */
+}
+
+.infoBlock {
+    background-color: rgba(13, 139, 215, 0.05); /* Light blue tint */
+    border-left: 4px solid var(--color-accent);
+    padding: 2rem;
+    border-radius: 0 12px 12px 0;
+}
+
+.infoBlock h4 {
+    color: var(--color-primary);
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.infoBlock p {
+    color: var(--color-text-body);
+    line-height: 1.6;
+}
+
+/* Sidebar */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.sidebarBox {
+  padding: 2rem;
+  background-color: var(--color-bg-light);
+  border-radius: 16px;
+  border: 1px solid var(--color-border);
+}
+
+.sidebarTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.planList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.planLink {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 8px;
+  color: var(--color-text-heading);
+  font-weight: 600;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+  text-decoration: none;
+}
+
+.planLink:hover,
+.planLink.active {
+  background-color: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+}
+
+.planLink.active .miniPrice {
+    color: var(--color-accent);
+}
+
+.miniPrice {
+    font-size: 0.875rem;
+    color: var(--color-text-body);
+}
+
+.faqText {
+    color: var(--color-text-body);
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+}

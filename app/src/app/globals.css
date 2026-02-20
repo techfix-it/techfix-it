@@ -1,0 +1,71 @@
+:root {
+  /* Brand Colors */
+  --color-primary: #05314B;
+  --color-secondary: #021520;
+  --color-accent: #0D8BD7;
+  --color-accent-2: #8BD70D; /* Lime Green */
+  --color-accent-3: #0D26D7; /* Deep Blue */
+  
+  /* Text Colors */
+  --color-text-body: #6A6A6A;
+  --color-text-heading: #021520;
+  --color-text-light: #FFFFFF;
+  
+  /* Backgrounds */
+  --color-bg-light: #F6F6F6;
+  --color-bg-white: #FFFFFF;
+  --color-bg-dark: #021520;
+
+  /* UI Elements */
+  --color-border: #DDDDDD;
+  --color-border-focus: #0D8BD7;
+
+  /* Spacing */
+  --spacing-container: 1280px;
+  --spacing-section: 6rem;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  font-family: var(--font-urbanist), sans-serif;
+  background-color: var(--color-bg-white);
+  color: var(--color-text-body);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+
+/* Typography Defaults */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-text-heading);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+p {
+  line-height: 1.6;
+}
+
+/* Container Utility */
+.container {
+  max-width: var(--spacing-container);
+  margin: 0 auto;
+  padding: 0 1rem;
+}

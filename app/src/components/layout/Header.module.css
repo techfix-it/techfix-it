@@ -1,0 +1,128 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  transition: all 0.3s ease;
+  padding: 1.5rem 0;
+  background-color: transparent;
+  /* Default text color when transparent (on blue bg) should be white */
+  color: white;
+}
+
+.scrolled {
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 1rem 0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  /* Text color when scrolled (on white bg) should be dark */
+  color: var(--color-secondary);
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logoText {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: white; /* White by default on blue bg */
+  transition: color 0.3s ease;
+}
+
+.scrolled .logoText {
+  color: var(--color-primary); /* Dark when scrolled */
+}
+
+.logoAccent {
+  color: var(--color-accent);
+}
+
+.desktopNav {
+  display: none;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .desktopNav {
+    display: flex;
+  }
+}
+
+.navLink {
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85); /* White-ish by default */
+  transition: color 0.2s;
+  position: relative;
+}
+
+.scrolled .navLink {
+  color: var(--color-secondary); /* Dark when scrolled */
+}
+
+.navLink:hover {
+  color: white;
+}
+
+.scrolled .navLink:hover {
+  color: var(--color-accent);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.ctaBtn {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .ctaBtn {
+    display: inline-flex;
+  }
+}
+
+.mobileToggle {
+  display: block;
+  color: var(--color-secondary);
+}
+
+@media (min-width: 768px) {
+  .mobileToggle {
+    display: none;
+  }
+}
+
+/* Mobile Nav */
+.mobileNav {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 80%;
+  height: 100vh;
+  background-color: var(--color-bg-white);
+  padding: 5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+  transition: right 0.3s ease-in-out;
+  z-index: 49;
+}
+
+.mobileNavOpen {
+  right: 0;
+}
+
+.mobileNavLink {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-secondary);
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 0.5rem;
+}
