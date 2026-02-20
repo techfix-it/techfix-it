@@ -10,7 +10,6 @@ import styles from './page.module.css';
 import fs from 'fs';
 import path from 'path';
 
-
 interface ServicePageProps {
   params: Promise<{ slug: string }>;
 }
