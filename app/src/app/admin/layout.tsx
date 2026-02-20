@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { signOut, useSession } from 'next-auth/react';
-import { LayoutDashboard, Layers, DollarSign, MessageSquare, StickyNote, FileText, Globe, LogOut } from 'lucide-react';
+import { LayoutDashboard, Layers, DollarSign, MessageSquare, StickyNote, FileText, Globe, LogOut, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -17,6 +17,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { name: 'Pricing Plans', href: '/admin/pricing', icon: DollarSign },
     { name: 'Testimonials', href: '/admin/testimonials', icon: MessageSquare },
     { name: 'Footer', href: '/admin/footer', icon: StickyNote },
+    { name: 'Contact Info', href: '/admin/contact', icon: Phone },
     { name: 'Msg/Legal', href: '/admin/legal', icon: FileText },
     { name: 'About Us', href: '/admin/about', icon: Globe },
     { name: 'Profile', href: '/admin/profile', icon: Globe }, // Reusing Globe or another icon

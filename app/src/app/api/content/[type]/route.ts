@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { supabase } from '@/lib/supabase';
-import { getServices, getPricingPlans, getHeroContent, getFooterContent, getTestimonials, getAboutPage, getLegalPages } from '@/lib/db';
+import { getServices, getPricingPlans, getHeroContent, getFooterContent, getTestimonials, getAboutPage, getLegalPages, getContactContent } from '@/lib/db';
 
 export async function GET(
   request: NextRequest,
@@ -17,6 +17,7 @@ export async function GET(
   if (type === 'hero_section') return NextResponse.json(await getHeroContent());
   if (type === 'footer_content') return NextResponse.json(await getFooterContent());
   if (type === 'about_page') return NextResponse.json(await getAboutPage());
+  if (type === 'contact_page') return NextResponse.json(await getContactContent());
 
   return NextResponse.json({ error: 'Invalid type' }, { status: 400 });
 }
@@ -52,7 +53,7 @@ export async function POST(
   };
 
   try {
-      if (type === 'hero_section' || type === 'footer_content' || type === 'about_page') {
+      if (type === 'hero_section' || type === 'footer_content' || type === 'about_page' || type === 'contact_page') {
           return await handleSingleton(type, body);
       }
 

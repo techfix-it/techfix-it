@@ -140,3 +140,9 @@ export async function getAboutPage() {
     const { data } = await supabase.from('site_content').select('data').eq('key', 'about_page').single();
     return data?.data || {};
 }
+
+export async function getContactContent() {
+    noStore();
+    const { data } = await supabase.from('site_content').select('data').eq('key', 'contact_page').single();
+    return data?.data || {};
+}

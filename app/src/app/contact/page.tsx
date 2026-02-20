@@ -4,8 +4,15 @@ import Footer from '@/components/layout/Footer';
 import ContactForm from '@/components/contact/ContactForm';
 import { Mail, MapPin, Phone } from 'lucide-react';
 import styles from './page.module.css';
+import { getContactContent } from '@/lib/db';
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const contact = await getContactContent();
+
+  const address = contact.address || "789 Oak St, Smalltown, TX 23456, United States";
+  const emails = contact.emails && contact.emails.length > 0 ? contact.emails : ["info@techfixit.com", "support@techfixit.com"];
+  const phones = contact.phones && contact.phones.length > 0 ? contact.phones : ["+1 (555) 123-4567", "+1 (555) 987-6543"];
+
   return (
     <main>
       <Header />
@@ -20,22 +27,42 @@ export default function ContactPage() {
             <div className={styles.infoBox}>
                <div className={styles.iconWrapper}><MapPin size={24} /></div>
                <h3>Address</h3>
-               <p>789 Oak St, Smalltown, TX 23456, United States</p>
+               <p>{address}</p>
             </div>
             <div className={styles.infoBox}>
                <div className={styles.iconWrapper}><Mail size={24} /></div>
                <h3>Email</h3>
-               <p>info@techfixit.com<br/>support@techfixit.com</p>
+               <div style={{ display: 'flex', flexDirection: 'column' }}>
+                 {emails.map((email: string, idx: number) => (
+                   <a 
+                    key={idx} 
+                    href={`mailto:${email}`} 
+                    className={styles.contactLink}
+                   >
+                     {email}
+                   </a>
+                 ))}
+               </div>
             </div>
             <div className={styles.infoBox}>
                <div className={styles.iconWrapper}><Phone size={24} /></div>
                <h3>Phone</h3>
-               <p>+1 (555) 123-4567<br/>+1 (555) 987-6543</p>
+               <div style={{ display: 'flex', flexDirection: 'column' }}>
+                 {phones.map((phone: string, idx: number) => (
+                   <a 
+                    key={idx} 
+                    href={`tel:${phone.replace(/\s+/g, '')}`} 
+                    className={styles.contactLink}
+                   >
+                     {phone}
+                   </a>
+                 ))}
+               </div>
             </div>
           </div>
           
-          <div className={styles.formWrapper}>
-            <h2 className={styles.formTitle}>Send us a Message</h2>
+          <div style={{ backgroundColor: 'white', padding: '2.5rem', borderRadius: '16px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
+            <h2 style={{ fontSize: '1.75rem', fontWeight: '800', marginBottom: '2rem', color: 'var(--color-primary)' }}>Send us a Message</h2>
             <ContactForm />
           </div>
         </div>
