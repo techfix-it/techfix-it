@@ -1,5 +1,6 @@
 import 'server-only';
 import { supabase } from './supabase';
+import { unstable_noStore as noStore } from 'next/cache';
 
 export interface AdminUser {
     id: string;
@@ -76,6 +77,7 @@ function normalizePricing(p: any): PricingPlan {
 }
 
 export async function getServices(): Promise<Service[]> {
+    noStore(); // Prevent Next.js from caching this fetch
     const { data, error } = await supabase.from('services').select('*').order('display_order', { ascending: true });
     if (error) {
         console.error('Error fetching services:', error);
@@ -85,6 +87,7 @@ export async function getServices(): Promise<Service[]> {
 }
 
 export async function getPricingPlans(): Promise<PricingPlan[]> {
+    noStore();
     const { data, error } = await supabase.from('pricing_plans').select('*').order('price', { ascending: true }); // simplified sort
     if (error) {
         console.error('Error fetching pricing:', error);
@@ -94,28 +97,33 @@ export async function getPricingPlans(): Promise<PricingPlan[]> {
 }
 
 export async function getPricingPlanBySlug(slug: string): Promise<PricingPlan | null> {
+    noStore();
     const { data, error } = await supabase.from('pricing_plans').select('*').eq('slug', slug).single();
     if (error) return null;
     return normalizePricing(data);
 }
 
 export async function getHeroContent() {
+    noStore();
     const { data } = await supabase.from('site_content').select('data').eq('key', 'hero_section').single();
     return data?.data || {};
 }
 
 export async function getFooterContent() {
+    noStore();
     const { data } = await supabase.from('site_content').select('data').eq('key', 'footer_content').single();
     return data?.data || {};
 }
 
 export async function getTestimonials(): Promise<Testimonial[]> {
+     noStore();
      const { data, error } = await supabase.from('testimonials').select('*');
      if (error) return [];
      return data as Testimonial[];
 }
 
 export async function getLegalPages(): Promise<LegalPage[]> {
+    noStore();
     const { data, error } = await supabase.from('legal_pages').select('*');
     if (error) {
         // Fallback default
@@ -128,6 +136,7 @@ export async function getLegalPages(): Promise<LegalPage[]> {
 }
 
 export async function getAboutPage() {
+    noStore();
     const { data } = await supabase.from('site_content').select('data').eq('key', 'about_page').single();
     return data?.data || {};
 }
