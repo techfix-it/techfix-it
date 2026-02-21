@@ -28,6 +28,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <meta name="google-site-verification" content="eqtYg-d3ydJloO14_qfvr5tXiZU-ZqRvHiqQLZd04q4" />
+      </head>
       <body className={`${urbanist.variable}`}>
         {/* Google Analytics */}
         <Script
