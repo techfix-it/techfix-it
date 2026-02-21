@@ -21,6 +21,11 @@ type PricingForm = {
     }[]
 };
 
+type PageMeta = {
+    title: string;
+    subtitle: string;
+};
+
 export default function PricingEditor() {
     const { register, control, handleSubmit, reset, watch } = useForm<PricingForm>({
         defaultValues: { plans: [] }
@@ -30,6 +35,7 @@ export default function PricingEditor() {
         name: "plans"
     });
     
+    const [pageMeta, setPageMeta] = useState<PageMeta>({ title: '', subtitle: '' });
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
     const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
@@ -39,30 +45,41 @@ export default function PricingEditor() {
     // The requirement implies managing the list order is meaningful.
     
     useEffect(() => {
-        fetch('/api/content/pricing_plans')
-            .then(res => res.json())
-            .then(data => {
-                reset({ plans: data });
-                setLoading(false);
+        Promise.all([
+            fetch('/api/content/pricing_plans').then(res => res.json()),
+            fetch('/api/content/pricing_page').then(res => res.json())
+        ]).then(([plansData, pageData]) => {
+            reset({ plans: plansData });
+            setPageMeta({
+                title: pageData?.title || 'Pricing Plans',
+                subtitle: pageData?.subtitle || 'Transparent pricing tailored to your business needs.'
             });
+            setLoading(false);
+        });
     }, [reset]);
 
     const onSubmit = async (data: PricingForm) => {
         setSaving(true);
         // Clean up data? 
-        await fetch('/api/content/pricing_plans', {
-            method: 'POST',
-            body: JSON.stringify(data.plans),
-        });
+        await Promise.all([
+            fetch('/api/content/pricing_plans', {
+                method: 'POST',
+                body: JSON.stringify(data.plans),
+            }),
+            fetch('/api/content/pricing_page', {
+                method: 'POST',
+                body: JSON.stringify(pageMeta),
+            })
+        ]);
         setSaving(false);
-        alert('Pricing plans updated!');
+        alert('Pricing plans and page info updated!');
     };
 
     if (loading) return <div>Loading...</div>;
 
     return (
         <div style={{ maxWidth: '900px', margin: '0 auto' }}>
-             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
                 <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'var(--color-primary)' }}>Manage Pricing Plans</h2>
                 <Button onClick={() => {
                     append({ id: crypto.randomUUID(), slug: '', name: 'New Plan', price: '$0', period: '/month', description: '', benefits_description: '', features: [], isPopular: false, featured: false, cta: 'Get Started' });
@@ -70,6 +87,29 @@ export default function PricingEditor() {
                 }}>
                     <Plus size={18} /> Add New Plan
                 </Button>
+            </div>
+
+            <div style={{ backgroundColor: 'white', borderRadius: '12px', padding: '1.5rem', boxShadow: '0 2px 5px rgba(0,0,0,0.05)', marginBottom: '2rem' }}>
+                <h3 style={{ fontWeight: 'bold', marginBottom: '1rem', fontSize: '1.25rem' }}>Page Header Content</h3>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1rem' }}>
+                    <div>
+                        <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem' }}>Page Title</label>
+                        <input 
+                            value={pageMeta.title}
+                            onChange={(e) => setPageMeta((prev) => ({ ...prev, title: e.target.value }))}
+                            style={{ width: '100%', padding: '0.5rem', borderRadius: '6px', border: '1px solid #ddd' }} 
+                        />
+                    </div>
+                    <div>
+                        <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem' }}>Page Subtitle</label>
+                        <textarea 
+                            value={pageMeta.subtitle}
+                            onChange={(e) => setPageMeta((prev) => ({ ...prev, subtitle: e.target.value }))}
+                            rows={2} 
+                            style={{ width: '100%', padding: '0.5rem', borderRadius: '6px', border: '1px solid #ddd' }} 
+                        />
+                    </div>
+                </div>
             </div>
 
             <form onSubmit={handleSubmit(onSubmit)}>

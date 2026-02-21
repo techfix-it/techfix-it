@@ -4,20 +4,21 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/Button';
 import { Check } from 'lucide-react';
-import { getPricingPlans } from '@/lib/db';
+import { getPricingPlans, getPricingPageContent } from '@/lib/db';
 import styles from './page.module.css';
 
 export const dynamic = 'force-dynamic';
 
 export default async function PricingPage() {
   const pricingPlans = await getPricingPlans();
+  const pageContent = await getPricingPageContent();
 
   return (
     <main>
       <Header />
       <PageHeader 
-        title="Pricing Plans" 
-        subtitle="Transparent pricing tailored to your business needs." 
+        title={pageContent.title || "Pricing Plans"} 
+        subtitle={pageContent.subtitle || "Transparent pricing tailored to your business needs."} 
       />
       
       <section className={styles.section}>

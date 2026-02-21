@@ -146,3 +146,16 @@ export async function getContactContent() {
     const { data } = await supabase.from('site_content').select('data').eq('key', 'contact_page').single();
     return data?.data || {};
 }
+
+export async function getPricingPageContent() {
+    noStore();
+    const { data } = await supabase.from('site_content').select('data').eq('key', 'pricing_page').single();
+    if (data?.data) {
+        return data.data;
+    }
+    // Default fallback if not defined
+    return {
+        title: "Pricing Plans",
+        subtitle: "Transparent pricing tailored to your business needs."
+    };
+}
