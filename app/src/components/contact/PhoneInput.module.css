@@ -1,0 +1,137 @@
+.wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background-color: var(--color-bg-light);
+  overflow: visible;
+  transition: all 0.2s;
+}
+
+.wrapper:focus-within {
+  border-color: var(--color-accent);
+  background-color: var(--color-bg-white);
+  box-shadow: 0 0 0 3px rgba(13, 139, 215, 0.1);
+}
+
+/* Country button */
+.countryBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0 0.75rem;
+  height: 100%;
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--color-border);
+  cursor: pointer;
+  white-space: nowrap;
+  min-height: 48px;
+  transition: background 0.15s;
+}
+
+.countryBtn:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.flag {
+  width: 20px;
+  height: 15px;
+  object-fit: cover;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.1);
+  display: block;
+  flex-shrink: 0;
+}
+
+.dial {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-heading);
+}
+
+.caret {
+  font-size: 0.65rem;
+  color: var(--color-text-body);
+  opacity: 0.7;
+}
+
+/* Number input */
+.numberInput {
+  flex: 1;
+  padding: 1rem 1rem;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 1rem;
+  outline: none;
+  min-width: 0;
+}
+
+/* Dropdown */
+.dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 200;
+  background: var(--color-bg-white);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  width: 280px;
+  overflow: hidden;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 0.65rem 1rem;
+  border: none;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-bg-light);
+  font-family: inherit;
+  font-size: 0.875rem;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0.35rem 0;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.12s;
+}
+
+.option:hover {
+  background: var(--color-bg-light);
+}
+
+.option.active {
+  background: rgba(13, 139, 215, 0.08);
+}
+
+.optionName {
+  flex: 1;
+  font-size: 0.875rem;
+  color: var(--color-text-heading);
+}
+
+.optionDial {
+  font-size: 0.8rem;
+  color: var(--color-text-body);
+  font-weight: 600;
+}
