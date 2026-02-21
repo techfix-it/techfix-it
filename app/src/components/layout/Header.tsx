@@ -29,6 +29,7 @@ export default function Header() {
 
         {/* Desktop Nav */}
         <nav className={styles.desktopNav}>
+          <a href="https://shop.techfix-it.ie/" className={styles.navLink} target="_blank" rel="noopener noreferrer">Shop</a>
           <Link href="/" className={styles.navLink}>Home</Link>
           <Link href="/about" className={styles.navLink}>About Us</Link>
           <Link href="/services" className={styles.navLink}>Services</Link>
@@ -37,9 +38,11 @@ export default function Header() {
         </nav>
 
         <div className={styles.actions}>
-          <Button variant="primary" size="md" className={styles.ctaBtn}>
-            Get Started
-          </Button>
+          <Link href="/contact">
+            <Button variant="primary" size="md" className={styles.ctaBtn}>
+              Get in Touch
+            </Button>
+          </Link>
           
           <button 
             className={styles.mobileToggle}
@@ -53,6 +56,7 @@ export default function Header() {
 
        {/* Mobile Nav */}
        <div className={cn(styles.mobileNav, isMobileMenuOpen && styles.mobileNavOpen)}>
+          <a href="https://shop.techfix-it.ie/" className={styles.mobileNavLink} target="_blank" rel="noopener noreferrer" onClick={() => setIsMobileMenuOpen(false)}>Shop</a>
           <Link href="/" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
           <Link href="/about" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>About Us</Link>
           <Link href="/services" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>Services</Link>
