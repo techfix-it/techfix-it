@@ -48,3 +48,4 @@ src/data/db.json
 #agents
 .agent
 .temp_ag_kit
+.env*.local

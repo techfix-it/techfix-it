@@ -3,6 +3,7 @@ import { Urbanist } from 'next/font/google';
 import './globals.css';
 import Providers from '@/components/Providers';
 import Script from 'next/script';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const urbanist = Urbanist({
   subsets: ['latin'],
@@ -42,6 +43,7 @@ export default function RootLayout({
         </Script>
         
         <Providers>{children}</Providers>
+        <SpeedInsights />
       </body>
     </html>
   );

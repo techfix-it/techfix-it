@@ -1,0 +1,1 @@
+INSERT INTO "public"."admin_users" ("id", "email", "password", "name", "created_at") VALUES ('c9eee0c5-57f8-42e9-b238-390ec7a9b8e0', 'admin@wefixit.com', 'admin', 'Admin Roots', '2026-02-17 17:03:58.456837+00');
