@@ -1,18 +1,19 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { Check } from 'lucide-react';
-import { getPricingPlans } from '@/lib/db';
+import { getPricingPlans, getPricingPageContent } from '@/lib/db';
 import styles from './Pricing.module.css';
 
 export default async function Pricing() {
   const pricingPlans = await getPricingPlans();
+  const pageContent = await getPricingPageContent();
 
   return (
     <section className={styles.pricing}>
       <div className="container">
         <div className={styles.header}>
-            <h2 className={styles.title}>Our Pricing Plans</h2>
-            <p className={styles.subtitle}>Choose the perfect plan for your business needs.</p>
+            <h2 className={styles.title}>{pageContent.home_title || "Our Pricing Plans"}</h2>
+            <p className={styles.subtitle}>{pageContent.home_subtitle || "Choose the perfect plan for your business needs."}</p>
         </div>
         
         <div className={styles.grid}>

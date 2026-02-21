@@ -24,6 +24,8 @@ type PricingForm = {
 type PageMeta = {
     title: string;
     subtitle: string;
+    home_title: string;
+    home_subtitle: string;
 };
 
 export default function PricingEditor() {
@@ -35,7 +37,7 @@ export default function PricingEditor() {
         name: "plans"
     });
     
-    const [pageMeta, setPageMeta] = useState<PageMeta>({ title: '', subtitle: '' });
+    const [pageMeta, setPageMeta] = useState<PageMeta>({ title: '', subtitle: '', home_title: '', home_subtitle: '' });
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
     const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
@@ -52,7 +54,9 @@ export default function PricingEditor() {
             reset({ plans: plansData });
             setPageMeta({
                 title: pageData?.title || 'Pricing Plans',
-                subtitle: pageData?.subtitle || 'Transparent pricing tailored to your business needs.'
+                subtitle: pageData?.subtitle || 'Transparent pricing tailored to your business needs.',
+                home_title: pageData?.home_title || 'Our Pricing Plans',
+                home_subtitle: pageData?.home_subtitle || 'Choose the perfect plan for your business needs.'
             });
             setLoading(false);
         });
@@ -90,7 +94,7 @@ export default function PricingEditor() {
             </div>
 
             <div style={{ backgroundColor: 'white', borderRadius: '12px', padding: '1.5rem', boxShadow: '0 2px 5px rgba(0,0,0,0.05)', marginBottom: '2rem' }}>
-                <h3 style={{ fontWeight: 'bold', marginBottom: '1rem', fontSize: '1.25rem' }}>Page Header Content</h3>
+                <h3 style={{ fontWeight: 'bold', marginBottom: '1rem', fontSize: '1.25rem' }}>Page Header Content (Pricing Page)</h3>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1rem' }}>
                     <div>
                         <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem' }}>Page Title</label>
@@ -105,6 +109,27 @@ export default function PricingEditor() {
                         <textarea 
                             value={pageMeta.subtitle}
                             onChange={(e) => setPageMeta((prev) => ({ ...prev, subtitle: e.target.value }))}
+                            rows={2} 
+                            style={{ width: '100%', padding: '0.5rem', borderRadius: '6px', border: '1px solid #ddd' }} 
+                        />
+                    </div>
+                </div>
+
+                <h3 style={{ fontWeight: 'bold', marginBottom: '1rem', marginTop: '2rem', fontSize: '1.25rem' }}>Homepage Section Header Content</h3>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1rem' }}>
+                    <div>
+                        <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem' }}>Homepage Title</label>
+                        <input 
+                            value={pageMeta.home_title || ''}
+                            onChange={(e) => setPageMeta((prev) => ({ ...prev, home_title: e.target.value }))}
+                            style={{ width: '100%', padding: '0.5rem', borderRadius: '6px', border: '1px solid #ddd' }} 
+                        />
+                    </div>
+                    <div>
+                        <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem' }}>Homepage Subtitle</label>
+                        <textarea 
+                            value={pageMeta.home_subtitle || ''}
+                            onChange={(e) => setPageMeta((prev) => ({ ...prev, home_subtitle: e.target.value }))}
                             rows={2} 
                             style={{ width: '100%', padding: '0.5rem', borderRadius: '6px', border: '1px solid #ddd' }} 
                         />

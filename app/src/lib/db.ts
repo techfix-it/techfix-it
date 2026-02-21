@@ -156,6 +156,8 @@ export async function getPricingPageContent() {
     // Default fallback if not defined
     return {
         title: "Pricing Plans",
-        subtitle: "Transparent pricing tailored to your business needs."
+        subtitle: "Transparent pricing tailored to your business needs.",
+        home_title: "Our Pricing Plans",
+        home_subtitle: "Choose the perfect plan for your business needs."
     };
 }
