@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   title: 'TechFix It | Technology Solutions',
   description: 'Innovation and excellence in technology services.',
   verification: {
-    google: 'googleb563f0f9764a0dea.html',
+    google: 'eqtYg-d3ydJloO14_qfvr5tXiZU-ZqRvHiqQLZd04q4',
   },
 };
 
