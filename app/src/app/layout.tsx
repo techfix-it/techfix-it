@@ -4,6 +4,7 @@ import './globals.css';
 import Providers from '@/components/Providers';
 import Script from 'next/script';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Analytics } from '@vercel/analytics/next';
 
 const urbanist = Urbanist({
   subsets: ['latin'],
@@ -44,6 +45,7 @@ export default function RootLayout({
         
         <Providers>{children}</Providers>
         <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
