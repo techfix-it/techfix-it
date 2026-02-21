@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import PageHeader from '@/components/layout/PageHeader';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import PricingCTA from '@/components/pricing/PricingCTA';
 import { Button } from '@/components/ui/Button';
 import { CheckCircle2, XCircle } from 'lucide-react';
 import Link from 'next/link';
@@ -48,7 +49,7 @@ export default async function PricingDetailPage({ params }: PricingDetailPagePro
                     <span className={styles.period}>{plan.period}</span>
                 </div>
                 <p className={styles.mainDescription}>{plan.description}</p>
-                <Button size="lg" className={styles.mainCta}>{plan.cta}</Button>
+                <PricingCTA planName={plan.name} label={plan.cta} size="lg" className={styles.mainCta} />
             </div>
             
             <h3 className={styles.sectionTitle}>What's Included?</h3>

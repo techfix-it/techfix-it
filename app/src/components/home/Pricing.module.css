@@ -44,6 +44,12 @@
   display: block;
 }
 
+.cardInnerLink {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
 .card {
   background-color: var(--color-bg-white);
   border-radius: 20px;

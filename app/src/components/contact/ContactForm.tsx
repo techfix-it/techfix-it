@@ -13,8 +13,8 @@ type FormState = {
   message: string;
 };
 
-export default function ContactForm() {
-  const [form, setForm] = useState<FormState>({ name: '', email: '', phone: '', subject: '', message: '' });
+export default function ContactForm({ planName }: { planName?: string }) {
+  const [form, setForm] = useState<FormState>({ name: '', email: '', phone: '', subject: planName ? `Interested in ${planName}` : '', message: '' });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
