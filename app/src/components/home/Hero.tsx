@@ -40,7 +40,12 @@ export default function Hero({ content }: HeroProps) {
   // Default values strictly if content is missing, though db.json should have it.
   const title = content?.title || "IT solutions that drive innovation and excellence in Ireland.";
   const subtitle = content?.subtitle || "Specialized technical support and managed IT services designed to scale your business. Security, performance, and continuity where you need it most.";
-  const lottieUrl = content?.image_url || "https://lottie.host/2a4c45a7-ff86-4738-b4d1-39f7c1eaa3c3/BvXVSWNDLL.json";
+  // Override any stored Lottie JSON with the visual GIF if not explicitly set elsewhere or if it's the old default
+  const rawImageUrl = content?.image_url;
+  const lottieUrl = (!rawImageUrl || rawImageUrl.includes('lottie.host')) 
+    ? "/uploads/globo.gif" 
+    : rawImageUrl;
+    
   const backgroundImage = content?.background_image;
   const showLottie = content?.show_lottie !== false;
 
@@ -85,7 +90,11 @@ export default function Hero({ content }: HeroProps) {
         {showLottie && (
             <div className={styles.visual}>
                 <div className={styles.lottieWrapper}>
-                    <LottiePlayer url={lottieUrl} />
+                    {lottieUrl?.endsWith('.json') ? (
+                        <LottiePlayer url={lottieUrl} />
+                    ) : (
+                        <img src={lottieUrl} alt="Hero Animation" style={{ width: '100%', height: 'auto', objectFit: 'contain', maxHeight: '500px' }} />
+                    )}
                 </div>
             </div>
         )}
