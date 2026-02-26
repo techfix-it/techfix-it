@@ -78,12 +78,12 @@ export default function Hero({ content }: HeroProps) {
             {subtitle}
           </p>
           <div className={styles.actions}>
-            <Link href={content?.cta_primary_link || "/services"}>
-                <Button size="lg" variant="primary">{content?.cta_primary_text || "Discover More"}</Button>
-            </Link>
-            <Link href={content?.cta_secondary_link || "/contact"}>
-                <Button size="lg" variant="outline" className={styles.secondaryBtn}>{content?.cta_secondary_text || "Contact Us"}</Button>
-            </Link>
+            <Button href={content?.cta_primary_link || "/services"} size="lg" variant="primary">
+                {content?.cta_primary_text || "Discover More"}
+            </Button>
+            <Button href={content?.cta_secondary_link || "/contact"} size="lg" variant="outline" className={styles.secondaryBtn}>
+                {content?.cta_secondary_text || "Contact Us"}
+            </Button>
           </div>
         </div>
 

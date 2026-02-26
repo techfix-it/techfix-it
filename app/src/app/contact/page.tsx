@@ -61,7 +61,7 @@ export default async function ContactPage() {
             </div>
           </div>
           
-          <div style={{ backgroundColor: 'white', padding: '2.5rem', borderRadius: '16px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
+          <div className={styles.formContainer}>
             <h2 style={{ fontSize: '1.75rem', fontWeight: '800', marginBottom: '2rem', color: 'var(--color-primary)' }}>Send us a Message</h2>
             <ContactForm />
           </div>
