@@ -20,7 +20,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { name: 'Contact Info', href: '/admin/contact', icon: Phone },
     { name: 'Msg/Legal', href: '/admin/legal', icon: FileText },
     { name: 'About Us', href: '/admin/about', icon: Globe },
-    { name: 'Profile', href: '/admin/profile', icon: Globe }, // Reusing Globe or another icon
+    { name: 'Profile', href: '/admin/profile', icon: Globe },
+    { name: 'Tickets', href: '/admin/tickets', icon: MessageSquare }, // Added Tickets Tab
   ];
 
   return (

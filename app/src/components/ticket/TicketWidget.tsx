@@ -4,9 +4,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import { MessageCircle, X, Send, Paperclip } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { Ticket, Message } from '@/lib/discord/types';
+import { usePathname } from 'next/navigation';
 import './ticket-widget.css';
 
 export default function TicketWidget() {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [ticket, setTicket] = useState<Ticket | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -178,6 +180,10 @@ export default function TicketWidget() {
       if (fileInputRef.current) fileInputRef.current.value = '';
     }
   };
+
+  if (pathname?.startsWith('/admin')) {
+    return null;
+  }
 
   return (
     <>
