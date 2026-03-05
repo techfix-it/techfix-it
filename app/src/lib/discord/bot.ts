@@ -11,7 +11,11 @@ import {
 } from 'discord.js';
 import { getSupabaseAdmin } from '../supabase';
 
-let client: Client | null = null;
+const DISCORD_CLIENT_KEY = Symbol.for('techfix.discordClient');
+const DISCORD_LISTENERS_KEY = Symbol.for('techfix.discordListenersAttached');
+
+const globalAny = global as any;
+let client: Client | null = globalAny[DISCORD_CLIENT_KEY] || null;
 const deletionTimers = new Map<string, NodeJS.Timeout>();
 
 export const getDiscordClient = async () => {
@@ -40,6 +44,7 @@ export const getDiscordClient = async () => {
   try {
     await client.login(token);
     console.log(`[Discord Bot] Successfully logged in as ${client.user?.tag}`);
+    globalAny[DISCORD_CLIENT_KEY] = client;
     setupDiscordListeners(client);
     return client;
   } catch (error: any) {
@@ -97,6 +102,14 @@ const generateTranscriptHtml = (ticket: any, messages: any[]) => {
 };
 
 const setupDiscordListeners = (discordClient: Client) => {
+  if (globalAny[DISCORD_LISTENERS_KEY]) {
+    console.log('[Discord Bot] Listeners already attached, skipping.');
+    return;
+  }
+  
+  globalAny[DISCORD_LISTENERS_KEY] = true;
+  console.log('[Discord Bot] Setting up listeners...');
+
   discordClient.on('messageCreate', async (message) => {
     if (message.author.bot) return;
 
@@ -122,10 +135,23 @@ const setupDiscordListeners = (discordClient: Client) => {
       }
     }
 
+    // 3. Add message to Supabase
+    // Using a strictly prioritized name (Nickname > Username)
+    const senderName = message.member?.displayName || message.author.username;
+
+    // Optional: Deduplication check by discord_message_id
+    const { data: existing } = await supabase
+      .from('messages')
+      .select('id')
+      .eq('discord_message_id', message.id)
+      .limit(1);
+
+    if (existing && existing.length > 0) return;
+
     await supabase.from('messages').insert({
       ticket_id: ticket.id,
       sender_type: 'agent',
-      sender_name: message.author.username,
+      sender_name: senderName,
       content: message.content || (fileUrl ? `Sent a file: ${fileName}` : ''),
       file_url: fileUrl,
       file_name: fileName,
@@ -137,6 +163,7 @@ const setupDiscordListeners = (discordClient: Client) => {
     if (!interaction.isButton()) return;
 
     const [action, ticketId] = interaction.customId.split(':');
+    console.log(`[Discord Bot] Interaction received: ${action} for ticket ${ticketId}`);
     const supabase = getSupabaseAdmin();
 
     if (action === 'close_ticket_resolved' || action === 'close_ticket_unresolved') {
@@ -181,6 +208,11 @@ const setupDiscordListeners = (discordClient: Client) => {
 
       } catch (error) {
         console.error('Error closing ticket:', error);
+        if (interaction.deferred || interaction.replied) {
+          await interaction.editReply({ content: '❌ Error closing ticket. Please try again.' });
+        } else {
+          await interaction.reply({ content: '❌ Error closing ticket. Please try again.', ephemeral: true });
+        }
       }
     }
 
@@ -221,6 +253,11 @@ const setupDiscordListeners = (discordClient: Client) => {
 
       } catch (error) {
         console.error('Error downloading transcript:', error);
+        if (interaction.deferred || interaction.replied) {
+          await interaction.editReply({ content: '❌ Error generating transcript. Please try again.' });
+        } else {
+          await interaction.reply({ content: '❌ Error generating transcript. Please try again.', ephemeral: true });
+        }
       }
     }
   });

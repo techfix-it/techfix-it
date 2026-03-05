@@ -4,7 +4,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { supabase } from '@/lib/supabase';
 import { Ticket } from '@/lib/types';
 import styles from './dashboard.module.css';
-import { LayoutDashboard, CheckCircle, XCircle, Clock } from 'lucide-react';
+import { LayoutDashboard, CheckCircle, XCircle, Clock, ExternalLink } from 'lucide-react';
 
 export default function AdminDashboard() {
   const [tickets, setTickets] = useState<Ticket[]>([]);
@@ -268,6 +268,42 @@ export default function AdminDashboard() {
               )}
             </div>
 
+          </div>
+
+          {/* Active Tickets section */}
+          <div className={styles.activeTicketsSection}>
+            <h2 className={styles.sectionTitle}>Active Tickets</h2>
+            <div className={styles.activeTicketsList}>
+              {tickets.filter(t => t.status === 'open').length === 0 ? (
+                <p className={styles.emptyState}>No active tickets found.</p>
+              ) : (
+                tickets
+                  .filter(t => t.status === 'open')
+                  .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+                  .map(ticket => (
+                    <div key={ticket.id} className={styles.activeTicketCard}>
+                      <div className={styles.activeTicketInfo}>
+                        <strong>{ticket.name}</strong>
+                        <span>{ticket.email}</span>
+                      </div>
+                      <div className={styles.activeTicketActions}>
+                        {ticket.discord_channel_id ? (
+                          <a 
+                            href={`https://discord.com/channels/${process.env.NEXT_PUBLIC_DISCORD_GUILD_ID || '1474817110533345340'}/${ticket.discord_channel_id}`} 
+                            target="_blank" 
+                            rel="noreferrer"
+                            className={styles.chatLink}
+                          >
+                            <ExternalLink size={16} /> Discord Chat
+                          </a>
+                        ) : (
+                          <span className={styles.noDiscord}>No Discord Linked</span>
+                        )}
+                      </div>
+                    </div>
+                  ))
+              )}
+            </div>
           </div>
         </>
       )}

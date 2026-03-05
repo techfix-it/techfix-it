@@ -184,3 +184,21 @@
 .downloadBtn:hover {
   background-color: #128c7e;
 }
+
+.inlineChatLink {
+  color: #5865F2; /* Discord Color */
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.inlineChatLink:hover {
+  text-decoration: underline;
+}
+
+.noChat {
+  color: #999;
+}

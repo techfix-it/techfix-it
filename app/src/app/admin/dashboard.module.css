@@ -19,10 +19,15 @@
   gap: 15px;
 }
 
-.title {
+.title, .sectionTitle {
   font-size: 24px;
   font-weight: 700;
   color: var(--color-primary);
+}
+
+.sectionTitle {
+  margin-top: 20px;
+  margin-bottom: 15px;
 }
 
 .filter {
@@ -369,5 +374,78 @@
   .pieInner {
     width: 100px;
     height: 100px;
+  }
+}
+
+.activeTicketsSection {
+  margin-top: 10px;
+}
+
+.activeTicketsList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.activeTicketCard {
+  background: var(--color-bg-dark);
+  padding: 15px 20px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.activeTicketInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.activeTicketInfo strong {
+  font-size: 16px;
+  color: white;
+}
+
+.activeTicketInfo span {
+  font-size: 13px;
+  color: #888;
+}
+
+.chatLink {
+  background: #5865F2; /* Discord color */
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: opacity 0.2s;
+}
+
+.chatLink:hover {
+  opacity: 0.9;
+}
+
+.noDiscord {
+  font-size: 13px;
+  color: #666;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .activeTicketCard {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .chatLink {
+    width: 100%;
+    justify-content: center;
   }
 }

@@ -64,7 +64,12 @@ export default function TicketWidget() {
           filter: `ticket_id=eq.${ticket.id}`,
         },
         (payload: any) => {
-          setMessages((prev) => [...prev, payload.new as Message]);
+          const newMessage = payload.new as Message;
+          setMessages((prev) => {
+            // Check if message already exists to avoid duplicates (from optimistic UI or manual send)
+            if (prev.some(m => m.id === newMessage.id)) return prev;
+            return [...prev, newMessage];
+          });
         }
       )
       .on(
@@ -79,7 +84,9 @@ export default function TicketWidget() {
           setTicket(payload.new as Ticket);
         }
       )
-      .subscribe();
+      .subscribe((status) => {
+        console.log(`[Realtime] Subscription status for ticket ${ticket.id}:`, status);
+      });
 
     return () => {
       if (supabase) {

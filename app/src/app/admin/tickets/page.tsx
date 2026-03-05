@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import { Ticket, Message } from '@/lib/types';
 import styles from './tickets.module.css';
-import { Download, X } from 'lucide-react';
+import { Download, X, ExternalLink } from 'lucide-react';
 
 export default function AdminTicketsPage() {
   const [tickets, setTickets] = useState<Ticket[]>([]);
@@ -227,6 +227,7 @@ export default function AdminTicketsPage() {
                 <th>Email</th>
                 <th>Phone</th>
                 <th>Status</th>
+                <th>Chat</th>
               </tr>
             </thead>
             <tbody>
@@ -244,6 +245,20 @@ export default function AdminTicketsPage() {
                     <span className={`${styles.statusBadge} ${ticket.status === 'open' ? styles.statusOpen : styles.statusClosed}`}>
                       {ticket.status.toUpperCase()}
                     </span>
+                  </td>
+                  <td onClick={(e) => e.stopPropagation()}>
+                    {ticket.status === 'open' && ticket.discord_channel_id ? (
+                      <a 
+                        href={`https://discord.com/channels/${process.env.NEXT_PUBLIC_DISCORD_GUILD_ID || '1474817110533345340'}/${ticket.discord_channel_id}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className={styles.inlineChatLink}
+                      >
+                        <ExternalLink size={16} /> Chat
+                      </a>
+                    ) : (
+                      <span className={styles.noChat}>-</span>
+                    )}
                   </td>
                 </tr>
               ))}
