@@ -5,6 +5,7 @@ import Providers from '@/components/Providers';
 import Script from 'next/script';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/next';
+import TicketWidget from '@/components/ticket/TicketWidget';
 
 const urbanist = Urbanist({
   subsets: ['latin'],
@@ -73,6 +74,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <Providers>{children}</Providers>
         <SpeedInsights />
         <Analytics />
+        <TicketWidget />
       </body>
     </html>
   );
