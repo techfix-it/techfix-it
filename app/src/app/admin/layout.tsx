@@ -1,14 +1,34 @@
 'use client';
 
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { signOut, useSession } from 'next-auth/react';
-import { LayoutDashboard, Layers, DollarSign, MessageSquare, StickyNote, FileText, Globe, LogOut, Phone } from 'lucide-react';
+import { 
+  LayoutDashboard, 
+  Layers, 
+  DollarSign, 
+  MessageSquare, 
+  StickyNote, 
+  FileText, 
+  Globe, 
+  LogOut, 
+  Phone,
+  Menu,
+  X
+} from 'lucide-react';
 import { Button } from '@/components/ui/Button';
+import styles from './admin-layout.module.css';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { data: session } = useSession();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // Close mobile menu when pathname changes
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
 
   const navItems = [
     { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
@@ -25,35 +45,48 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   ];
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh' }}>
+    <div className={styles.layout}>
+      {/* Mobile Toggle Button */}
+      <button 
+        className={styles.menuToggle}
+        onClick={() => setIsMobileMenuOpen(true)}
+        aria-label="Open Menu"
+      >
+        <Menu size={24} />
+      </button>
+
+      {/* Mobile Overlay */}
+      <div 
+        className={`${styles.overlay} ${isMobileMenuOpen ? styles.open : ''}`}
+        onClick={() => setIsMobileMenuOpen(false)}
+      />
+
       {/* Sidebar */}
-      <aside style={{ width: '250px', backgroundColor: '#1a1a2e', color: 'white', padding: '2rem', display: 'flex', flexDirection: 'column' }}>
-        <div style={{ marginBottom: '3rem' }}>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: '800', color: 'white', display: 'flex', alignItems: 'center', gap: '4px' }}>
+      <aside className={`${styles.sidebar} ${isMobileMenuOpen ? styles.open : ''}`}>
+        <button 
+          className={styles.closeToggle}
+          onClick={() => setIsMobileMenuOpen(false)}
+          aria-label="Close Menu"
+        >
+          <X size={24} />
+        </button>
+
+        <div className={styles.sidebarHeader}>
+          <h2 className={styles.title}>
             <span>TechFix-</span><span style={{ color: 'var(--color-accent)' }}>It</span> 
-            <span style={{ fontSize: '0.875rem', fontWeight: 'normal', opacity: 0.7, marginLeft: '0.5rem', alignSelf: 'flex-end', paddingBottom: '4px' }}>Admin</span>
+            <span className={styles.subtitle}>Admin</span>
           </h2>
-          <p style={{ fontSize: '0.875rem', color: '#888' }}>Welcome, {session?.user?.name || 'Admin'}</p>
+          <p className={styles.welcome}>Welcome, {session?.user?.name || 'Admin'}</p>
         </div>
 
-        <nav style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+        <nav className={styles.nav}>
           {navItems.map((item) => {
             const isActive = pathname === item.href;
             return (
               <Link 
                 key={item.href} 
                 href={item.href}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.75rem',
-                  padding: '0.75rem',
-                  borderRadius: '8px',
-                  backgroundColor: isActive ? 'var(--color-primary)' : 'transparent',
-                  color: isActive ? 'white' : '#ccc',
-                  textDecoration: 'none',
-                  transition: 'all 0.2s'
-                }}
+                className={`${styles.navItem} ${isActive ? styles.navItemActive : ''}`}
               >
                 <item.icon size={20} />
                 <span>{item.name}</span>
@@ -65,15 +98,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <Button 
             variant="destructive" 
             onClick={() => signOut({ callbackUrl: '/' })}
-            style={{ marginTop: 'auto', width: '100%', display: 'flex', gap: '0.5rem', justifyContent: 'center' }}
+            className={styles.logoutBtn}
         >
             <LogOut size={18} /> Sign Out
         </Button>
       </aside>
 
       {/* Main Content */}
-      <main style={{ flex: 1, backgroundColor: '#f5f5f7', padding: '2rem', overflowY: 'auto' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+      <main className={styles.mainContent}>
+        <div className={styles.mainInner}>
             {children}
         </div>
       </main>

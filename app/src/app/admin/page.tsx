@@ -54,19 +54,25 @@ export default function AdminDashboard() {
   // Calculate Bar Chart Data (Tickets opened and closed per month)
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   const barChartData = useMemo(() => {
-    const data = months.map(m => ({ month: m, opened: 0, resolved: 0 }));
+    const data = months.map(m => ({ month: m, opened: 0, resolved: 0, unresolved: 0 }));
     filteredTickets.forEach(t => {
       const d = new Date(t.created_at);
       const monthIdx = d.getMonth();
-      data[monthIdx].opened += 1;
-      if (t.status === 'closed' && t.resolution === 'resolved') {
-        data[monthIdx].resolved += 1;
+      
+      if (t.status === 'open') {
+        data[monthIdx].opened += 1;
+      } else if (t.status === 'closed') {
+        if (t.resolution === 'resolved') {
+          data[monthIdx].resolved += 1;
+        } else {
+          data[monthIdx].unresolved += 1;
+        }
       }
     });
     return data;
   }, [filteredTickets]);
 
-  const maxBarValue = Math.max(1, ...barChartData.flatMap(d => [d.opened, d.resolved]));
+  const maxBarValue = Math.max(1, ...barChartData.flatMap(d => [d.opened, d.resolved, d.unresolved]));
   const yAxisSteps = [maxBarValue, Math.ceil(maxBarValue * 0.66), Math.ceil(maxBarValue * 0.33), 0];
 
   // Calculate Pie Chart Data (Resolved vs Unresolved vs Open ratio)
@@ -168,16 +174,20 @@ export default function AdminDashboard() {
             {/* Bar Chart section */}
             <div className={styles.chartBox}>
               <h3 className={styles.chartTitle}>Tickets Opened and Resolved Over Time</h3>
-              <div className={styles.legend}>
-                <div className={styles.legendItem}>
-                  <div className={`${styles.legendColor} ${styles.barOpen}`}></div>
-                  <span>Opened</span>
+                <div className={styles.legend}>
+                  <div className={styles.legendItem}>
+                    <div className={`${styles.legendColor} ${styles.barOpen}`}></div>
+                    <span>Opened</span>
+                  </div>
+                  <div className={styles.legendItem}>
+                    <div className={`${styles.legendColor} ${styles.barResolved}`}></div>
+                    <span>Resolved</span>
+                  </div>
+                  <div className={styles.legendItem}>
+                    <div className={`${styles.legendColor} ${styles.barUnresolved}`}></div>
+                    <span>Unresolved</span>
+                  </div>
                 </div>
-                <div className={styles.legendItem}>
-                  <div className={`${styles.legendColor} ${styles.barResolved}`}></div>
-                  <span>Resolved</span>
-                </div>
-              </div>
 
               <div className={styles.barChart}>
                 {/* Y-Axis */}
@@ -204,6 +214,11 @@ export default function AdminDashboard() {
                       className={`${styles.barCol} ${styles.barResolved}`} 
                       style={{ height: `${(data.resolved / maxBarValue) * 100}%` }}
                       data-value={data.resolved}
+                    ></div>
+                    <div 
+                      className={`${styles.barCol} ${styles.barUnresolved}`} 
+                      style={{ height: `${(data.unresolved / maxBarValue) * 100}%` }}
+                      data-value={data.unresolved}
                     ></div>
                     <span className={styles.barLabel}>{data.month}</span>
                   </div>
@@ -244,7 +259,7 @@ export default function AdminDashboard() {
                     <div className={styles.pieLegendItem}>
                       <div className={styles.pieLegendLeft}>
                         <div className={styles.legendColor} style={{ background: '#ff6a00' }}></div>
-                        <span>Open</span>
+                        <span>Opened</span>
                       </div>
                       <strong>{((openTickets / totalTickets) * 100).toFixed(1)}%</strong>
                     </div>

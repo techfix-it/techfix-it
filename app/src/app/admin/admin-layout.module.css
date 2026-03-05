@@ -1,0 +1,169 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+  position: relative;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #1a1a2e;
+  color: white;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+  z-index: 50;
+}
+
+.sidebarHeader {
+  margin-bottom: 3rem;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.subtitle {
+  font-size: 0.875rem;
+  font-weight: normal;
+  opacity: 0.7;
+  margin-left: 0.5rem;
+  align-self: flex-end;
+  padding-bottom: 4px;
+}
+
+.welcome {
+  font-size: 0.875rem;
+  color: #888;
+}
+
+.nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 8px;
+  background-color: transparent;
+  color: #ccc;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.navItemActive {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.logoutBtn {
+  margin-top: auto;
+  width: 100%;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.mainContent {
+  flex: 1;
+  background-color: #f5f5f7;
+  padding: 2rem;
+  overflow-y: auto;
+  width: 100%;
+  min-width: 0; /* CRITICAL for flex children to shrink */
+}
+
+.mainInner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Mobile Toggle Button */
+.menuToggle {
+  display: none;
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  width: 45px;
+  height: 45px;
+  justify-content: center;
+  align-items: center;
+  z-index: 40;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.closeToggle {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: none;
+}
+
+/* Overlay for mobile drawer */
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 45;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.overlay.open {
+  display: block;
+  opacity: 1;
+}
+
+/* Media Queries for Mobile */
+@media (max-width: 768px) {
+  .layout {
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    transform: translateX(-100%);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .mainContent {
+    padding: 80px 1rem 1rem 1rem; /* Space for the floating menu button and tighter padding */
+  }
+
+  .menuToggle {
+    display: flex;
+  }
+
+  .closeToggle {
+    display: block;
+  }
+}
