@@ -1,6 +1,6 @@
 import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { supabase } from './supabase';
+import { getSupabaseAdmin } from './supabase';
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -24,7 +24,8 @@ export const authOptions: NextAuthOptions = {
         console.log('[Auth] Env check - URL:', !!supabaseUrl, 'Key:', !!supabaseKey);
 
         try {
-            const { data: user, error } = await supabase
+            const supabaseAdmin = getSupabaseAdmin();
+            const { data: user, error } = await supabaseAdmin
                 .from('admin_users')
                 .select('*')
                 .eq('email', credentials.email)
